@@ -122,7 +122,7 @@ class Feeling_Quote_Screen(tk.Frame):
     def __init__(self, root, quote):
         super().__init__(root)
         self.configure(width=1000, height=100)
-        title = tk.Label(self, text="You Win", font=title_font, anchor="n")
+        title = tk.Label(self, text="Feel better", font=title_font, anchor="n")
         title.grid(column=0, row=0, columnspan=2)
         self.quote_text = tk.Label(self, text=quote, font=default_font, anchor="n", wraplength=250)
         self.quote_text.grid(column=0, row=1, columnspan=2)
