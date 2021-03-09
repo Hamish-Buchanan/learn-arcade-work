@@ -4,6 +4,7 @@ It does this using graphical functions from the arcade library.
 """
 #Set up
 import arcade
+import random
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 600
 
@@ -77,11 +78,12 @@ def main():
     arcade.set_background_color(arcade.color.BLUE_YONDER)
 
     #Create some boats
+    boat_colors = [arcade.color.RED,arcade.color.ORANGE,arcade.color.YELLOW,arcade.color.GREEN,arcade.color.BLUE,arcade.color.PURPLE,arcade.color.INDIGO,arcade.color.VIOLET]
     global boat_list
     boat_list = []
-    boat_list.append(Boat(400, 200, arcade.color.PUCE, 1, 0, 0.5))
-    boat_list.append(Boat(300, 100, arcade.color.RUSSET, 0.5, 0, 1))
-    boat_list.append(Boat(470, 30, arcade.color.RUST, 1.7, 0, 0.7))
+    for i in range(len(boat_colors)):
+        boat_list.append(Boat(0, 260-35*i, boat_colors[i], (random.randint(3,9)/10)**2, 0, 0.3))
+
 
     #Finish
     arcade.schedule(on_draw, 1/60)
