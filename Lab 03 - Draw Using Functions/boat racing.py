@@ -82,7 +82,7 @@ def main():
     global boat_list
     boat_list = []
     for i in range(len(boat_colors)):
-        boat_list.append(Boat(0, 260-35*i, boat_colors[i], (random.randint(3,9)/10)**2, 0, 0.3))
+        boat_list.append(Boat(0, 260-35*i, boat_colors[i], (random.randint(50,100)/100)*(random.randint(30,100)/100), 0, 0.3))
 
 
     #Finish

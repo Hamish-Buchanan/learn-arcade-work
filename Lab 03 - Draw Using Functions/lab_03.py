@@ -4,6 +4,7 @@ It does this using graphical functions from the arcade library.
 """
 #Set up
 import arcade
+import math
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 600
 
@@ -37,9 +38,16 @@ def on_draw(delta_time):
     draw_star(243,556)
     draw_star(167,570)
     draw_star(70,520)
+
+    #Draw the Boats
     for boat in boat_list:
         boat.draw_boat()
         boat.move_step()
+
+    #Draw the Dolphins
+    for dolphin in dolphin_list:
+        dolphin.draw_dolphin()
+        dolphin.move_step()
 
 class Boat:
     """The boat class"""
@@ -71,6 +79,31 @@ class Boat:
         # Draw a point at x, y for reference
         # arcade.draw_point(x, y, arcade.color.RED, 5)
 
+class Dolphin:
+    """The dolphin class"""
+    def __init__(self, start_x, start_y, velocity_x, velocity_y, scale):
+        self.x = start_x
+        self.y = start_y
+        self.velocity_x = velocity_x
+        self.velocity_y = velocity_y
+        self.scale = scale
+        self.angle = 0
+
+    def move_step(self):
+        self.x = self.x + self.velocity_x
+        self.y = self.y + self.velocity_y
+        self.angle += 0.1
+        if self.angle >= 360:
+            self.angle = 0
+
+    def draw_dolphin(self):
+        """Draws this boat centered on x and y"""
+        # Draw boat base
+        #X := originX + cos(angle)*radius; Y := originY + sin(angle)*radius;
+        arcade.draw_ellipse_filled(self.x + math.sin(self.angle)*100, self.y+ math.cos(self.angle)*100, 150, 50, arcade.color.ASH_GREY, tilt_angle = self.angle*30)
+        # Draw a point at x, y for reference
+        arcade.draw_point(self.x , self.y, arcade.color.RED, 5)
+
 def main():
     #Open window
     arcade.open_window(SCREEN_WIDTH, SCREEN_HEIGHT, "Sunset")
@@ -82,6 +115,11 @@ def main():
     boat_list.append(Boat(400, 200, arcade.color.PUCE, 1, 0, 0.5))
     boat_list.append(Boat(300, 100, arcade.color.RUSSET, 0.5, 0, 1))
     boat_list.append(Boat(470, 30, arcade.color.RUST, 1.7, 0, 0.7))
+
+    #Make some dolphins
+    global dolphin_list
+    dolphin_list = []
+    dolphin_list.append(Dolphin(0, 70, 1, 0, 0.5))
 
     #Finish
     arcade.schedule(on_draw, 1/60)
