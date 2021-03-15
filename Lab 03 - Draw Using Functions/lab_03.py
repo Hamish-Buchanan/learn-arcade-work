@@ -88,21 +88,25 @@ class Dolphin:
         self.velocity_y = velocity_y
         self.scale = scale
         self.angle = 0
+        self.sprite = arcade.Sprite("dolphin.png",0.25*self.scale)
 
     def move_step(self):
         self.x = self.x + self.velocity_x
         self.y = self.y + self.velocity_y
-        self.angle += 0.1
+        self.angle += self.velocity_x*0.013
         if self.angle >= 360:
             self.angle = 0
 
     def draw_dolphin(self):
         """Draws this boat centered on x and y"""
-        # Draw boat base
-        #X := originX + cos(angle)*radius; Y := originY + sin(angle)*radius;
-        arcade.draw_ellipse_filled(self.x + math.sin(self.angle)*100, self.y+ math.cos(self.angle)*100, 150, 50, arcade.color.ASH_GREY, tilt_angle = self.angle*30)
+        # Draw Dolphin
+        #arcade.draw_ellipse_filled(self.x + math.sin(self.angle)*100, self.y+ math.cos(self.angle)*100, 150, 30, arcade.color.ASH_GREY, tilt_angle = self.angle)
+        self.sprite.center_x = self.x + math.sin(self.angle)*100*self.scale
+        self.sprite.center_y = self.y + math.cos(self.angle)*100*self.scale
+        self.sprite.draw()
+        arcade.draw_rectangle_filled(self.x,self.y-70*self.scale,400*self.scale,200*self.scale,arcade.color.BLUE_YONDER)
         # Draw a point at x, y for reference
-        arcade.draw_point(self.x , self.y, arcade.color.RED, 5)
+        # arcade.draw_point(self.x , self.y, arcade.color.RED, 5)
 
 def main():
     #Open window
@@ -119,7 +123,9 @@ def main():
     #Make some dolphins
     global dolphin_list
     dolphin_list = []
-    dolphin_list.append(Dolphin(0, 70, 1, 0, 0.5))
+    dolphin_list.append(Dolphin(10, 70, 2, 0, 0.7))
+    dolphin_list.append(Dolphin(120, 70, 2, 0, 0.7))
+
 
     #Finish
     arcade.schedule(on_draw, 1/60)
