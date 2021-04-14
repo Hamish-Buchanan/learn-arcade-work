@@ -15,7 +15,7 @@ COIN_SCALING = 0.5
 
 # Movement speed of player, in pixels per frame
 PLAYER_MOVEMENT_SPEED = 5
-GRAVITY = 1
+GRAVITY = 0.5
 PLAYER_JUMP_SPEED = 20
 
 

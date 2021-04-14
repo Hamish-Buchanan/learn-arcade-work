@@ -36,6 +36,9 @@ class MyGame(arcade.Window):
         # Call the parent class and set up the window
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
+        # Background image will be stored in this variable
+        self.background = None
+
         # These are 'lists' that keep track of our sprites. Each sprite should
         # go into a list.
         self.coin_list = None
@@ -64,6 +67,9 @@ class MyGame(arcade.Window):
         # Used to keep track of our scrolling
         self.view_bottom = 0
         self.view_left = 0
+
+        # Load background
+        self.background = arcade.load_texture("images/fire_background.jpg")
 
         # Create the Sprite lists
         self.player_list = arcade.SpriteList()
@@ -114,6 +120,11 @@ class MyGame(arcade.Window):
 
         # Clear the screen to the background color
         arcade.start_render()
+
+        # Draw the background texture
+        arcade.draw_lrwh_rectangle_textured(self.view_left, self.view_bottom,
+                                            SCREEN_WIDTH, SCREEN_HEIGHT,
+                                            self.background)
 
         # Draw our sprites
         self.wall_list.draw()

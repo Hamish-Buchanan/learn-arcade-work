@@ -36,6 +36,9 @@ class MyGame(arcade.Window):
         # Call the parent class and set up the window
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
+        # Background image will be stored in this variable
+        self.background = None
+
         # These are 'lists' that keep track of our sprites. Each sprite should
         # go into a list.
         self.coin_list = None
@@ -67,6 +70,9 @@ class MyGame(arcade.Window):
         # Used to keep track of our scrolling
         self.view_bottom = 0
         self.view_left = 0
+
+        # Load background
+        self.background = arcade.load_texture("images/fire_background.jpg")
 
         # Keep track of the score
         self.score = 0
@@ -104,11 +110,13 @@ class MyGame(arcade.Window):
             self.wall_list.append(wall)
 
         # Use a loop to place some coins for our character to pick up
+        self.coin_pop = 0
         for x in range(128, 1250, 256):
             coin = arcade.Sprite(":resources:images/items/coinGold.png", COIN_SCALING)
             coin.center_x = x
             coin.center_y = 96
             self.coin_list.append(coin)
+            self.coin_pop += 1
 
         # Create the 'physics engine'
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite,
@@ -121,6 +129,10 @@ class MyGame(arcade.Window):
         # Clear the screen to the background color
         arcade.start_render()
 
+        # Draw the background texture
+        arcade.draw_lrwh_rectangle_textured(self.view_left, self.view_bottom,
+                                            SCREEN_WIDTH, SCREEN_HEIGHT,
+                                            self.background)
         # Draw our sprites
         self.wall_list.draw()
         self.coin_list.draw()
@@ -129,7 +141,11 @@ class MyGame(arcade.Window):
         # Draw our score on the screen, scrolling it with the viewport
         score_text = f"Score: {self.score}"
         arcade.draw_text(score_text, 10 + self.view_left, 10 + self.view_bottom,
-                         arcade.csscolor.WHITE, 18)
+                         arcade.csscolor.DARK_GREY, 30, font_name='GARA')
+
+        # Draw the number of coins left to be collected on the screen
+        coin_left_text = f"Coins left: {self.coin_pop-self.score}"
+        arcade.draw_text(coin_left_text, 150 + self.view_left, 10 + self.view_bottom, arcade.csscolor.DARK_GREY, 30, font_name='GARA')
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """

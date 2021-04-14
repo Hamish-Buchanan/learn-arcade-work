@@ -15,8 +15,8 @@ COIN_SCALING = 0.5
 
 # Movement speed of player, in pixels per frame
 PLAYER_MOVEMENT_SPEED = 5
-GRAVITY = 1
-PLAYER_JUMP_SPEED = 20
+GRAVITY = 3
+PLAYER_JUMP_SPEED = 60
 
 # How many pixels to keep as a minimum margin between the character
 # and the edge of the screen.
@@ -83,9 +83,9 @@ class MyGame(arcade.Window):
 
         # Put some crates on the ground
         # This shows using a coordinate list to place sprites
-        coordinate_list = [[256, 96],
-                           [512, 96],
-                           [768, 96]]
+        coordinate_list = []
+        for i in range(100):
+            coordinate_list.append([240+i*180,96])
 
         for coordinate in coordinate_list:
             # Add a crate on the ground
